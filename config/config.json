@@ -1,6 +1,6 @@
 {
   "development": {
-    "database": "express_auth_development",
+    "database": "express_auth_dev",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
@@ -10,7 +10,7 @@
     "dialect": "postgres"
   },
   "production": {
-    "database": "express_auth_production",
+    "database": "express_auth",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
