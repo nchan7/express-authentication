@@ -46,6 +46,11 @@ module.exports = (sequelize, DataTypes) => {
   user.prototype.validPassword = function(passwordTyped) { // assign new key to my user prototype...refer to every user that you can create and store into database
     return bcrypt.compareSync(passwordTyped, this.password);
   }
+  user.prototype.toJSON = function() {
+    var userData = this.get();
+    delete userData.password; 
+    return userData;
+  }
   return user;
 };
 
