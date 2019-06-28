@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
     email: {
       type: DataTypes.STRING,
+      //* You can set validation. Msgs show up in flash alerts
       validate: {
         isEmail: {
           msg: "Please enter a valid email"
@@ -31,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
+    //* Life cycle hook... after this hook, it creates but puts a hash in its place
     hooks: {
       beforeCreate: function (pendingUser, options) {
         if (pendingUser && pendingUser.password) {
@@ -43,14 +45,16 @@ module.exports = (sequelize, DataTypes) => {
   user.associate = function(models) {
     // associations can be defined here
   };
+
   user.prototype.validPassword = function(passwordTyped) { // assign new key to my user prototype...refer to every user that you can create and store into database
     return bcrypt.compareSync(passwordTyped, this.password);
-  }
+  };
+
   user.prototype.toJSON = function() {
     var userData = this.get();
     delete userData.password; 
     return userData;
-  }
+  };
   return user;
 };
 

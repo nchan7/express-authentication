@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const ejsLayouts = require('express-ejs-layouts');
+//* Module allows use of sessions
 const session = require('express-session');
+//* Imports passport local strategy
 const passport = require('./config/passportConfig');
 const app = express();
 
@@ -14,14 +16,14 @@ app.use(ejsLayouts);
 
 // Configures express-session middleware
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET, //* Good to have one distinct session secret per app. Sessions can be forged
   resave: false,
   saveUninitialized: true
 }));
 
 // Link passport ot the express session
 //! MUST BE BELOW SESSION
-app.use(passport.initialize());
+app.use(passport.initialize()); //* Built in passport function...that's what they advise us to do first
 app.use(passport.session());
 
 app.get('/', function(req, res) {
