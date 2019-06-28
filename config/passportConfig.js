@@ -2,6 +2,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var db = require('../models');
 
+//* Taken from Passport's Local Strategy Website...they tell us best practice for using their app
+
 /*
  * Passport "serializes" objects to make them easy to store, converting the
  * user to an identifier (id)
@@ -47,7 +49,7 @@ passport.use(new LocalStrategy({
 }, function(email, password, cb) {
   db.user.findOne({
     where: { email: email }
-  }).then(function(user) {
+  }).then(function(user) { //* If it doesn't find the email then it returns nothing. If user = null, validPassword also won't work
     if (!user || !user.validPassword(password)) {
       cb(null, false);
     } else {
